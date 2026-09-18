@@ -3,7 +3,8 @@
 **Stack Attack**, rebuilt to feel like when you were at school playing it on your Siemens
 (C35, C45, A50, M50 and others had it built in).
 
-![Title](screenshots/title.png) ![Gameplay](screenshots/gameplay.png) ![Row clear](screenshots/row_clear.png)
+![Title](screenshots/title.png) ![Gameplay](screenshots/gameplay.png)
+![Climbing](screenshots/climbing.png) ![Row clear](screenshots/row_clear.png)
 
 
 ## How to play
