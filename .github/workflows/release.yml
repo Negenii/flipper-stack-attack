@@ -1,0 +1,48 @@
+name: Release
+
+# Push a tag like v1.0 (matching fap_version) to get a draft release with the .fap
+# built against the latest official firmware. Check it on a Flipper, then publish.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tag matches fap_version
+        run: |
+          ver=$(sed -n 's/.*fap_version="\([^"]*\)".*/\1/p' application.fam)
+          [ "v$ver" = "$GITHUB_REF_NAME" ] || { echo "tag $GITHUB_REF_NAME != fap_version $ver"; exit 1; }
+          echo "VERSION=$ver" >> "$GITHUB_ENV"
+
+      - name: Rule tests
+        run: cc -std=c11 -Wall -Wextra -I. tests/test_game.c game.c -o /tmp/t && /tmp/t
+
+      - name: Build with ufbt
+        id: build
+        uses: flipperdevices/flipperzero-ufbt-action@v0.1.4
+        with:
+          sdk-channel: release
+
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp "${{ steps.build.outputs.fap-dir }}/stack_attack.fap" stack_attack.fap
+          # this version's section of changelog.md, then install notes
+          awk -v v="## $VERSION" '$0==v{on=1;next} /^## /{on=0} on' changelog.md > notes.md
+          cat >> notes.md <<EOF
+
+          ## Install
+          Copy stack_attack.fap to SD/apps/Games/ with qFlipper, or install Stack Attack from the Flipper Apps Catalog.
+
+          Built for firmware API ${{ steps.build.outputs.api-version }} (${{ steps.build.outputs.suffix }}).
+          EOF
+          gh release create "$GITHUB_REF_NAME" stack_attack.fap --draft \
+            --title "Stack Attack $VERSION" --notes-file notes.md
