@@ -104,19 +104,19 @@ static void fb_text_right(uint8_t* fb, int y, const char* s) {
     fb_text(fb, FB_W - 4 * (int)strlen(s), y, s);
 }
 
-// Side panel, one line every 7 px, everything right-aligned: label, then its value.
+// Side panel, one line every 7 px, everything right-aligned: label, value, blank line.
 static void draw_panel(uint8_t* fb, const Game* g, uint32_t hiscore) {
     char buf[12];
     fb_text_right(fb, 3, "SCORE");
     snprintf(buf, sizeof(buf), "%lu", (unsigned long)g->score);
     fb_text_right(fb, 10, buf);
-    fb_text_right(fb, 17, "HI");
+    fb_text_right(fb, 24, "HI");
     snprintf(buf, sizeof(buf), "%lu", (unsigned long)(g->score > hiscore ? g->score : hiscore));
-    fb_text_right(fb, 24, buf);
+    fb_text_right(fb, 31, buf);
     // cranes in rotation, the game's only difficulty knob
-    fb_text_right(fb, 38, "CR");
+    fb_text_right(fb, 45, "CR");
     snprintf(buf, sizeof(buf), "%u", (unsigned)g->cranes);
-    fb_text_right(fb, 45, buf);
+    fb_text_right(fb, 52, buf);
 }
 
 void render_game(uint8_t* fb, const Game* g, uint32_t hiscore) {
