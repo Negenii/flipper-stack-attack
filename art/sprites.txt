@@ -1,0 +1,285 @@
+# Sprites for Stack Attack. '#' = black, '.' = white.
+# Box patterns were sampled from gameplay recordings on the recovered pixel grid.
+# Worker frames are traced from video frames and cleaned by hand.
+# Crane is redrawn by hand after the video frames (compression made them noisy).
+# Masks (opaque area) are computed by the generator: everything not reachable
+# from the sprite border through '.' is opaque. Sprites marked "opaque" cover their
+# whole rectangle.
+# Sprites marked "mirror" also get a horizontally flipped copy named *_l.
+
+@box1
+########
+#......#
+#..#####
+#..#..##
+#..#####
+#......#
+#......#
+########
+
+@box2
+########
+##....##
+#......#
+#......#
+#......#
+#......#
+##....##
+########
+
+@box3
+########
+##....##
+#.#..#.#
+#..##..#
+#......#
+#......#
+#......#
+########
+
+@box4
+########
+#...#..#
+#..#...#
+#.#...##
+##...#.#
+#...#..#
+#..#...#
+########
+
+@box5
+########
+##....##
+#.#..#.#
+#..##..#
+#..##..#
+#.#..#.#
+##....##
+########
+
+@box6
+########
+#......#
+##....##
+#.#..#.#
+#.#..#.#
+##....##
+#......#
+########
+
+@box7
+########
+#......#
+########
+#......#
+#......#
+########
+#......#
+########
+
+# the C45 has an 8th pattern the demake dropped (seen at 0:35; also in stktk's sheet)
+@box8
+########
+#...#..#
+#...#..#
+#...####
+#......#
+#......#
+#......#
+########
+
+# Row clear explosion. Frames agree across three sources: the demake (sharp, but all
+# cells at once), eaun01re/stktk's box sheet, and the C45 recording (right-to-left
+# wave; its LCD smears frames together). Ringed box -> medium ring -> full ring -> fade.
+@clear1 opaque
+########
+#......#
+#..##..#
+#.#..#.#
+#.#..#.#
+#..##..#
+#......#
+########
+
+# medium ring (demake at 49.37 s, stktk frame 2)
+@boom2 opaque
+........
+..####..
+.#....#.
+.#....#.
+.#....#.
+.#....#.
+..####..
+........
+
+# full ring, an octagon with chamfered corners (C45 at 0:36). Drawn opaque like on the
+# phone: its white corners break the floor line, so all four sides show.
+@boom3 opaque
+..####..
+.#....#.
+#......#
+#......#
+#......#
+#......#
+.#....#.
+..####..
+
+# fading, as the C45 LCD shows it
+@boom4 opaque
+..#..#..
+........
+#......#
+........
+........
+#......#
+........
+...##...
+
+@boom5 opaque
+........
+........
+#.......
+........
+........
+.......#
+........
+........
+
+@worker_front0
+..####..
+.#....#.
+.#....#.
+.######.
+.##..##.
+.##..##.
+.#....#.
+.#....#.
+.######.
+#.#..#.#
+#.#..#.#
+#.#..#.#
+########
+#.####.#
+.######.
+.######.
+
+@worker_front1
+..####..
+.#....#.
+.#....#.
+.#....#.
+.######.
+.##..##.
+.#....#.
+.#....#.
+.######.
+#.#..#.#
+#.#..#.#
+#.#..#.#
+########
+#.####.#
+.######.
+.######.
+
+@worker_r0 mirror
+..####..
+.#....#.
+.#....#.
+.#######
+.#.###..
+.#.#.###
+.#.....#
+.#...###
+..####..
+.##.##..
+.#.#.#..
+.#.#.#..
+.#####..
+.#..##..
+.######.
+.######.
+
+@worker_r1 mirror
+..####..
+.#....#.
+.#....#.
+.#######
+.#.###..
+.#.#.###
+.#.....#
+.#...###
+.#####..
+##.#.##.
+#.##.#.#
+#.#..#.#
+#######.
+#..#####
+.#######
+.###....
+
+@worker_jump_r mirror
+..####..
+.#....#.
+.#....#.
+.#######
+.#.###..
+.#.#.###
+.#.....#
+.#...###
+#######.
+#..#.#.#
+####.#.#
+#..#.##.
+.######.
+########
+###.####
+.##..##.
+
+# crane holding a box: drawn at (box_x - 2, 2); the box goes at (box_x, 13)
+@crane_closed
+..#......#..
+..########..
+..#......#..
+...#....#...
+....#..#....
+.....##.....
+.....##.....
+...######...
+.##......##.
+#..######..#
+#.#......#.#
+#..........#
+#..........#
+#..........#
+#..........#
+#..........#
+#..........#
+#..........#
+##........##
+
+# crane after release: drawn at (box_x - 4, 2)
+@crane_open
+....#......#....
+....########....
+....#......#....
+.....#....#.....
+......#..#......
+.......##.......
+.......##.......
+....########....
+..##........##..
+.#............#.
+#..............#
+#..............#
+##............##
+
+# box smashed by the helmet
+@debris
+#..#..#.
+.#....#.
+..#..#..
+........
+#......#
+.#.##.#.
+........
+...##...

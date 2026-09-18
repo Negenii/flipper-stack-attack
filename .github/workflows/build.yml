@@ -1,0 +1,20 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sdk-channel: [release, rc]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rule tests
+        run: cc -std=c11 -Wall -Wextra -I. tests/test_game.c game.c -o /tmp/t && /tmp/t
+      - name: Build with ufbt
+        uses: flipperdevices/flipperzero-ufbt-action@v0.1.4
+        with:
+          sdk-channel: ${{ matrix.sdk-channel }}
